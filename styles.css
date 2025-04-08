@@ -1,0 +1,102 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #f0f4f8;
+    color: #333;
+    padding: 20px;
+  }
+  
+  .container {
+    max-width: 900px;
+    margin: auto;
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  }
+  
+  header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  header h1 {
+    color: #323451;
+    margin-bottom: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 800;
+  }
+  
+  .summary .cards {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+  
+  .card {
+    flex: 1;
+    min-width: 150px;
+    background: #ecf0f1;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+  }
+  
+  .card h3 {
+    font-size: 1rem;
+    margin-bottom: 10px;
+  }
+  
+  .activities ul {
+    list-style: none;
+    margin-top: 15px;
+  }
+  
+  .activities li {
+    display: flex;
+    justify-content: space-between;
+    background: #eaf2f8;
+    padding: 12px 15px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    font-size: 1rem;
+  }
+  .add-activity {
+    margin-top: 30px;
+  }
+  
+  .add-activity form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .add-activity input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+  }
+  
+  .add-activity button {
+    padding: 10px 20px;
+    background: #2ecc71;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .add-activity button:hover {
+    background: #27ae60;
+  }
+
