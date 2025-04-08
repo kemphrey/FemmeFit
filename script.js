@@ -101,6 +101,29 @@ function updateSteps() {
     document.getElementById("total-steps").textContent = totalSteps;
 }
 
+// Emoji mapping for activities
+const ACTIVITY_EMOJIS = {
+    running: "🏃‍♀️",  // Running emoji
+    walking: "🚶‍♀️",  // Walking emoji
+    cycling: "🚴‍♀️",  // Cycling emoji
+    yoga: "🧘‍♀️",     // Yoga emoji
+    weightlifting: "🏋️‍♀️",  // Weightlifting emoji
+    swimming: "🏊‍♀️",  // Swimming emoji
+    aerobics: "🤸‍♀️",  // Aerobics emoji
+    hiking: "🥾",      // Hiking emoji
+    dancing: "💃",     // Dancing emoji
+    tennis: "🎾",      // Tennis emoji
+    basketball: "🏀",   // Basketball emoji
+    football: "⚽",     // Football emoji
+    golf: "⛳",        // Golf emoji
+};
+
+// Function to assign an emoji based on the activity name
+function getActivityEmoji(activity) {
+    const activityKey = activity.toLowerCase();
+    return ACTIVITY_EMOJIS[activityKey] || "❓";  // Return a default emoji if activity not found
+}
+
 // Handle new activity submission and update time, calories, and steps
 document.getElementById("activityForm").addEventListener("submit", function (e) {
     e.preventDefault();
@@ -111,8 +134,12 @@ document.getElementById("activityForm").addEventListener("submit", function (e) 
     if (name && duration) {
         const list = document.querySelector(".activities ul");
 
+        // Get the emoji for the activity
+        const activityEmoji = getActivityEmoji(name);
+
+        // Add the new activity with emoji
         const newItem = document.createElement("li");
-        newItem.innerHTML = `<span>${name}</span><span>${duration}</span>`;
+        newItem.innerHTML = `<span>${activityEmoji} ${name}</span><span>${duration}</span>`;
         list.prepend(newItem);
 
         // Clear input fields
