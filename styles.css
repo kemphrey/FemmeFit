@@ -47,6 +47,11 @@
     padding: 20px;
     border-radius: 10px;
     text-align: center;
+    transition: transform 0.2s ease;
+  }
+  
+  .card:hover {
+    transform: scale(1.03);
   }
   
   .card h3 {
@@ -57,17 +62,39 @@
   .activities ul {
     list-style: none;
     margin-top: 15px;
+    padding-left: 0;
   }
   
   .activities li {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     background: #eaf2f8;
     padding: 12px 15px;
     border-radius: 8px;
     margin-bottom: 10px;
     font-size: 1rem;
   }
+  
+  .activities li span {
+    flex: 1;
+  }
+  
+  .delete-btn {
+    background-color: #e74c3c;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .delete-btn:hover {
+    background-color: #c0392b;
+  }
+  
   .add-activity {
     margin-top: 30px;
   }
@@ -100,10 +127,12 @@
   .add-activity button:hover {
     background: #27ae60;
   }
-h4 {
+  
+  h4 {
     color: #eaf2f8;
     margin-top: 50px;
     text-align: center;
     font-style: italic;
     font-size: large;
-}
+  }
+  

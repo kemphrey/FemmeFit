@@ -1,8 +1,15 @@
-// Parse duration string like "30 mins", "1 hr", or "1 hr 15 mins"
+// Parse duration string like "30 mins", "1 hr", "45", etc.
 function parseDuration(durationStr) {
     let minutes = 0;
-    const hourMatch = durationStr.match(/(\d+)\s*hr/);
-    const minMatch = durationStr.match(/(\d+)\s*min/);
+    const cleaned = durationStr.toLowerCase().trim();
+
+    const hourMatch = cleaned.match(/(\d+)\s*(hr|hour)/);
+    const minMatch = cleaned.match(/(\d+)\s*(min|minute)/);
+
+    if (!hourMatch && !minMatch && /^\d+$/.test(cleaned)) {
+        // Only a number was typed, treat as minutes
+        minutes += parseInt(cleaned);
+    }
 
     if (hourMatch) minutes += parseInt(hourMatch[1]) * 60;
     if (minMatch) minutes += parseInt(minMatch[1]);
@@ -24,107 +31,114 @@ const MET_VALUES = {
 // Calculate calories burned
 function calculateCaloriesBurned(activity, durationMinutes, weightKg = 70) {
     const activityKey = activity.toLowerCase();
-    const met = MET_VALUES[activityKey] || 5; // Default MET if unknown
+    const met = MET_VALUES[activityKey] || 5;
     const durationHours = durationMinutes / 60;
-
-    const calories = met * weightKg * durationHours;
-    return Math.round(calories);
+    return Math.round(met * weightKg * durationHours);
 }
 
 // Update total workout time
 function updateWorkoutTime() {
-    const durations = document.querySelectorAll(".activities ul li span:nth-child(2)");
+    const durations = document.querySelectorAll(".activities ul li span.duration");
     const totalTime = Array.from(durations)
         .map(el => parseDuration(el.textContent))
         .reduce((sum, mins) => sum + mins, 0);
-
     document.getElementById("total-time").textContent = totalTime;
 }
 
 // Update total calories burned
 function updateCaloriesBurned(weight = 70) {
     const activities = document.querySelectorAll(".activities ul li");
-
     let totalCalories = 0;
 
     activities.forEach(item => {
-        const name = item.querySelector("span:first-child").textContent;
-        const durationStr = item.querySelector("span:last-child").textContent;
+        const name = item.querySelector("span.name").textContent;
+        const durationStr = item.querySelector("span.duration").textContent;
         const durationMins = parseDuration(durationStr);
-
-        // Extract just the word (e.g., "Running" from "🏃‍♀️ Running")
         const activityKey = name.replace(/[^\w\s]/gi, "").trim().split(" ").pop().toLowerCase();
-
         totalCalories += calculateCaloriesBurned(activityKey, durationMins, weight);
     });
 
     document.getElementById("total-calories").textContent = totalCalories;
 }
 
-// Step estimation per activity (steps per minute)
+// Steps calculation
 const STEPS_PER_MINUTE = {
-    running: 130, // Example: 130 steps per minute while running
-    walking: 100, // Example: 100 steps per minute while walking
-    cycling: 0, // Cycling does not contribute to steps in this example
-    yoga: 0, // Yoga does not contribute to steps in this example
-    weightlifting: 0, // Weightlifting does not contribute to steps in this example
-    swimming: 0, // Swimming does not contribute to steps in this example
-    aerobics: 120 // Example: 120 steps per minute while doing aerobics
+    running: 130,
+    walking: 100,
+    cycling: 0,
+    yoga: 0,
+    weightlifting: 0,
+    swimming: 0,
+    aerobics: 120
 };
 
-// Function to calculate steps based on activity and duration
 function calculateSteps(activity, durationMinutes) {
     const activityKey = activity.toLowerCase();
-    const stepsPerMinute = STEPS_PER_MINUTE[activityKey] || 0; // Default to 0 if unknown activity
-
-    const totalSteps = stepsPerMinute * durationMinutes;
-    return totalSteps;
+    const stepsPerMinute = STEPS_PER_MINUTE[activityKey] || 0;
+    return stepsPerMinute * durationMinutes;
 }
 
-// Function to update total steps based on activities
 function updateSteps() {
     const activities = document.querySelectorAll(".activities ul li");
-
     let totalSteps = 0;
 
     activities.forEach(item => {
-        const name = item.querySelector("span:first-child").textContent;
-        const durationStr = item.querySelector("span:last-child").textContent;
-        const durationMins = parseDuration(durationStr); // Reusing the existing parseDuration function
-
-        // Extract just the word (e.g., "Running" from "🏃‍♀️ Running")
+        const name = item.querySelector("span.name").textContent;
+        const durationStr = item.querySelector("span.duration").textContent;
+        const durationMins = parseDuration(durationStr);
         const activityKey = name.replace(/[^\w\s]/gi, "").trim().split(" ").pop().toLowerCase();
-
         totalSteps += calculateSteps(activityKey, durationMins);
     });
 
     document.getElementById("total-steps").textContent = totalSteps;
 }
 
-// Emoji mapping for activities
+// Emojis
 const ACTIVITY_EMOJIS = {
-    running: "🏃‍♀️",  // Running emoji
-    walking: "🚶‍♀️",  // Walking emoji
-    cycling: "🚴‍♀️",  // Cycling emoji
-    yoga: "🧘‍♀️",     // Yoga emoji
-    weightlifting: "🏋️‍♀️",  // Weightlifting emoji
-    swimming: "🏊‍♀️",  // Swimming emoji
-    aerobics: "🤸‍♀️",  // Aerobics emoji
-    hiking: "🥾",      // Hiking emoji
-    dancing: "💃",     // Dancing emoji
-    tennis: "🎾",      // Tennis emoji
-    basketball: "🏀",   // Basketball emoji
-    football: "⚽",     // Football emoji
-    golf: "⛳",        // Golf emoji
+    running: "🏃‍♀️",
+    walking: "🚶‍♀️",
+    cycling: "🚴‍♀️",
+    yoga: "🧘‍♀️",
+    weightlifting: "🏋️‍♀️",
+    swimming: "🏊‍♀️",
+    aerobics: "🤸‍♀️",
+    hiking: "🥾",
+    dancing: "💃",
+    tennis: "🎾",
+    basketball: "🏀",
+    football: "⚽",
+    golf: "⛳",
 };
 
-// Function to assign an emoji based on the activity name
 function getActivityEmoji(activity) {
     const activityKey = activity.toLowerCase();
-    return ACTIVITY_EMOJIS[activityKey] || "❓";  // Return a default emoji if activity not found
+    return ACTIVITY_EMOJIS[activityKey] || "❓";
 }
 
-// Handle new activity submission and update time, calories, and steps
+// Create and append new activity
+function addActivityToList(name, duration) {
+    const list = document.querySelector(".activities ul");
+    const emoji = getActivityEmoji(name);
+
+    const li = document.createElement("li");
+    li.innerHTML = `
+        <span class="name">${emoji} ${name}</span>
+        <span class="duration">${duration}</span>
+        <button class="delete-btn">Delete</button>
+    `;
+
+    // Add delete functionality
+    li.querySelector(".delete-btn").addEventListener("click", () => {
+        li.remove();
+        updateWorkoutTime();
+        updateCaloriesBurned();
+        updateSteps();
+    });
+
+    list.prepend(li);
+}
+
+// Handle form submission
 document.getElementById("activityForm").addEventListener("submit", function (e) {
     e.preventDefault();
 
@@ -132,29 +146,37 @@ document.getElementById("activityForm").addEventListener("submit", function (e) 
     const duration = document.getElementById("activityDuration").value.trim();
 
     if (name && duration) {
-        const list = document.querySelector(".activities ul");
+        addActivityToList(name, duration);
 
-        // Get the emoji for the activity
-        const activityEmoji = getActivityEmoji(name);
-
-        // Add the new activity with emoji
-        const newItem = document.createElement("li");
-        newItem.innerHTML = `<span>${activityEmoji} ${name}</span><span>${duration}</span>`;
-        list.prepend(newItem);
-
-        // Clear input fields
         document.getElementById("activityName").value = "";
         document.getElementById("activityDuration").value = "";
 
-        // Update time, calories, and steps
         updateWorkoutTime();
         updateCaloriesBurned();
         updateSteps();
     }
 });
 
-// Recalculate total time, calories, and steps on page load
+// Init totals on load
 window.addEventListener("DOMContentLoaded", () => {
+    // Add delete buttons to existing list items
+    document.querySelectorAll(".activities ul li").forEach(li => {
+        const deleteBtn = document.createElement("button");
+        deleteBtn.classList.add("delete-btn");
+        deleteBtn.textContent = "Delete";
+
+        deleteBtn.addEventListener("click", () => {
+            li.remove();
+            updateWorkoutTime();
+            updateCaloriesBurned();
+            updateSteps();
+        });
+
+        li.appendChild(deleteBtn);
+        li.querySelector("span:nth-child(1)").classList.add("name");
+        li.querySelector("span:nth-child(2)").classList.add("duration");
+    });
+
     updateWorkoutTime();
     updateCaloriesBurned();
     updateSteps();

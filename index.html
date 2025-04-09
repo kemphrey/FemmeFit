@@ -1,65 +1,68 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>femmefit</title>
-    <link rel="stylesheet" href="styles.css"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FemmeFit</title>
+  <link rel="stylesheet" href="styles.css"/>
 </head>
 <body style="background-color: #323451; background-image: url(https://wallpaperaccess.com/full/804834.jpg); background-repeat: no-repeat; background-size: cover; background-position: center;">
-    <div class="container" style="background-image: url('https://cdn.mos.cms.futurecdn.net/JWdii5TmH9NLYCqFzLMs9Q.jpg'); background-size: cover;">
-        <header>
-          <h1>Fe<span style="color: rgb(48, 75, 99);">mme</span><span style="color: aliceblue;">Fit</span> </h1>
-          <p style="text-align: left;">Welcome, FREDA!</p>
-        </header>
+  <div class="container" style="background-image: url('https://cdn.mos.cms.futurecdn.net/JWdii5TmH9NLYCqFzLMs9Q.jpg'); background-size: cover;">
     
-        <section class="summary">
-          <h2>Today's Summary</h2>
-          <div class="cards">
-            <div class="card">
-              <h3>Steps</h3>
-              <p><span id="total-steps">0</span> steps</p>
-            </div>
-            <div class="card">
-              <h3>Calories Burned</h3>
-              <p><p><span id="total-calories">0</span> kcal</p></p>
-            </div>  
-            <div class="card">
-              <h3>Total Workout Time</h3>
-              <p> <span id="total-time">0</span> minutes</p>
-            </div>
-          </div>
-        </section>
-    
-        <section class="activities">
-          <h2>Recent Activities</h2>
-          <ul>
-            <li>
-              <span>🏃‍♀️ Running</span>
-              <span id="workoutTimes">30 mins</span>
-            </li>
-            <li>
-              <span>🧘‍♀️ Yoga</span>
-              <span id="workoutTimes">15 mins</span>
-            </li>
-            <li>
-              <span>🚴‍♀️ Cycling</span>
-              <span id="workoutTimes">1 hr</span>
-            </li>
-          </ul>
-        </section>
-        <section class="add-activity">
-            <h2>Add New Activity</h2>
-            <form id="activityForm">
-              <input type="text" id="activityName" placeholder="Activity (e.g. 🏋️ Weightlifting)" required />
-              <input type="text" id="activityDuration" placeholder="Duration (e.g. 30 mins)" required />
-              <button type="submit">Add Activity</button>
-            </form>
-          </section>
-          
-          <script src="script.js"></script>
+    <header>
+      <h1>Fe<span style="color: rgb(48, 75, 99);">mme</span><span style="color: aliceblue;">Fit</span></h1>
+      <p style="text-align: left;">Welcome, FREDA!</p>
+    </header>
 
+    <section class="summary">
+      <h2>Today's Summary</h2>
+      <div class="cards">
+        <div class="card">
+          <h3>Steps</h3>
+          <p><span id="total-steps">0</span> steps</p>
+        </div>
+        <div class="card">
+          <h3>Calories Burned</h3>
+          <p><span id="total-calories">0</span> kcal</p>
+        </div>  
+        <div class="card">
+          <h3>Total Workout Time</h3>
+          <p><span id="total-time">0</span> minutes</p>
+        </div>
       </div>
-      <h4>Track Your PROGRESS, Elevate Your LIFE</h4>
+    </section>
+
+    <section class="activities">
+      <h2>Recent Activities</h2>
+      <ul id="activityList">
+        <li>
+          <span>🏃‍♀️ Running</span>
+          <span class="workout-time">30 mins</span>
+        </li>
+        <li>
+          <span>🧘‍♀️ Yoga</span>
+          <span class="workout-time">15 mins</span>
+        </li>
+        <li>
+          <span>🚴‍♀️ Cycling</span>
+          <span class="workout-time">1 hr</span>
+        </li>
+      </ul>
+    </section>
+
+    <section class="add-activity">
+      <h2>Add New Activity</h2>
+      <form id="activityForm">
+        <input type="text" id="activityName" placeholder="Activity (e.g. 🏋️ Weightlifting)" required />
+        <input type="text" id="activityDuration" placeholder="Duration (e.g. 30 mins)" required />
+        <button type="submit">Add Activity</button>
+      </form>
+    </section>
+
+    <script src="script.js"></script>
+
+  </div>
+  <h4>Track Your PROGRESS, Elevate Your LIFE</h4>
 </body>
 </html>
